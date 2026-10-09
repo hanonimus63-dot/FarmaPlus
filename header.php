@@ -11,7 +11,7 @@ $pagina_actual = basename($_SERVER['PHP_SELF']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FarmaPlus - Sistema de Gestión de Farmacia</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="css/estilos.css?v=1.1">
 </head>
 <body>
 
