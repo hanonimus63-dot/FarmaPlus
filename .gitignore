@@ -1,0 +1,6 @@
+# Ignorar carpetas temporales y de entorno de desarrollo local
+/vendor/
+/.idea/
+/.vscode/
+*.log
+.DS_Store
