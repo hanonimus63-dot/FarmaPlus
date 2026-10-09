@@ -41,52 +41,126 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceso al Sistema - FarmaPlus</title>
-    <link rel="stylesheet" href="css/estilos.css?v=1.1">
     <style>
-        /* CSS embebido de respaldo para garantizar renderizado en Railway */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body.body-login {
+        /* Estilos propios e independientes para login.php */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #e9ecef;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
+
         .contenedor-login {
             background-color: #ffffff;
             width: 100%;
             max-width: 400px;
             padding: 30px;
             border-radius: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
             border: 1px solid #dcdcdc;
         }
-        .login-header { text-align: center; margin-bottom: 20px; }
-        .login-header h2 { color: #0056b3; margin-bottom: 5px; font-size: 24px; }
-        .login-header p { color: #666; font-size: 14px; }
-        .grupo-form { margin-bottom: 15px; }
-        .grupo-form label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 14px; }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .login-header h2 {
+            color: #0056b3;
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            color: #666666;
+            font-size: 14px;
+        }
+
+        .grupo-form {
+            margin-bottom: 18px;
+        }
+
+        .grupo-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #333333;
+        }
+
         .grupo-form input {
-            width: 100%; padding: 8px 10px; border: 1px solid #cccccc; border-radius: 4px; font-size: 14px;
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
         }
-        .btn {
-            display: inline-block; padding: 10px 14px; border: none; border-radius: 4px; cursor: pointer;
-            font-size: 14px; font-weight: bold; text-decoration: none; text-align: center;
+
+        .grupo-form input:focus {
+            border-color: #0056b3;
         }
-        .btn-primario { background-color: #0056b3; color: white; }
-        .btn-primario:hover { background-color: #004085; }
-        .credenciales-demo {
-            background-color: #f8f9fa; border: 1px dashed #cccccc; padding: 10px; margin-top: 15px;
-            font-size: 12px; border-radius: 4px; color: #495057; line-height: 1.5;
+
+        .btn-ingresar {
+            width: 100%;
+            background-color: #0056b3;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 5px;
         }
+
+        .btn-ingresar:hover {
+            background-color: #004085;
+        }
+
         .alerta-error {
-            background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
-            padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 14px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .credenciales-demo {
+            background-color: #f8f9fa;
+            border: 1px dashed #cccccc;
+            padding: 12px;
+            margin-top: 20px;
+            font-size: 12px;
+            border-radius: 4px;
+            color: #495057;
+            line-height: 1.5;
+        }
+
+        .credenciales-demo code {
+            background-color: #e9ecef;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #d63384;
+            font-weight: bold;
         }
     </style>
 </head>
-<body class="body-login">
+<body>
 
     <div class="contenedor-login">
         <div class="login-header">
@@ -95,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <?php if ($error): ?>
-            <div class="alerta alerta-error">
+            <div class="alerta-error">
                 <?= htmlspecialchars($error) ?>
             </div>
         <?php endif; ?>
@@ -111,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="password" id="password" name="password" required autocomplete="current-password" placeholder="••••••••">
             </div>
 
-            <button type="submit" class="btn btn-primario" style="width: 100%; margin-top: 10px;">Ingresar al Sistema</button>
+            <button type="submit" class="btn-ingresar">Ingresar al Sistema</button>
         </form>
 
         <div class="credenciales-demo">

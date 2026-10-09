@@ -8,5 +8,24 @@
         </div>
     </footer>
 
+    <style>
+        .footer-principal {
+            background-color: #343a40;
+            color: #cccccc;
+            text-align: center;
+            padding: 15px 20px;
+            font-size: 13px;
+            margin-top: auto;
+        }
+        .footer-principal strong {
+            color: #ffffff;
+        }
+        .info-dev {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #999999;
+        }
+    </style>
+
 </body>
 </html>
