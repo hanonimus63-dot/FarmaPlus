@@ -1,7 +1,13 @@
+-- ========================================================
+-- SCRIPT DE BASE DE DATOS PARA FARMAPLUS
+-- Desarrollado por: Ashley Moreta
+-- Compatible con: MySQL 5.7+, MySQL 8.0+, DBeaver, XAMPP, Railway
+-- ========================================================
+
 CREATE DATABASE IF NOT EXISTS `farmaplus` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `farmaplus`;
 
--- Tabla de Usuarios
+-- 1. Tabla de Usuarios (Control de Acceso y Roles)
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `username` VARCHAR(50) NOT NULL UNIQUE,
@@ -9,9 +15,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nombre` VARCHAR(100) NOT NULL,
   `rol` ENUM('admin', 'farmaceutico') NOT NULL DEFAULT 'farmaceutico',
   `creado_en` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla de Obras Sociales / Seguros Médicos
+-- 2. Tabla de Obras Sociales / Seguros Médicos
 CREATE TABLE IF NOT EXISTS `seguros` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `codigo` VARCHAR(20) NOT NULL UNIQUE,
@@ -19,9 +25,9 @@ CREATE TABLE IF NOT EXISTS `seguros` (
   `cobertura_porcentaje` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
   `telefono` VARCHAR(30) NULL,
   `estado` ENUM('activo', 'inactivo') DEFAULT 'activo'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla de Inventario / Medicamentos
+-- 3. Tabla de Inventario / Medicamentos
 CREATE TABLE IF NOT EXISTS `medicamentos` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `codigo_barras` VARCHAR(50) NOT NULL UNIQUE,
@@ -30,9 +36,9 @@ CREATE TABLE IF NOT EXISTS `medicamentos` (
   `precio` DECIMAL(10,2) NOT NULL,
   `stock` INT NOT NULL DEFAULT 0,
   `requiere_receta` TINYINT(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla de Dispensaciones (Ventas / Entrega de Medicamentos)
+-- 4. Tabla de Dispensaciones (Ventas / Salida de Medicamentos)
 CREATE TABLE IF NOT EXISTS `dispensaciones` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `usuario_id` INT NOT NULL,
@@ -43,11 +49,11 @@ CREATE TABLE IF NOT EXISTS `dispensaciones` (
   `monto_cobertura` DECIMAL(10,2) NOT NULL DEFAULT 0.00,
   `monto_total` DECIMAL(10,2) NOT NULL,
   `fecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`),
-  FOREIGN KEY (`seguro_id`) REFERENCES `seguros`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  FOREIGN KEY (`usuario_id`) REFERENCES `usuarios`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`seguro_id`) REFERENCES `seguros`(`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Tabla Detalle de Dispensaciones
+-- 5. Tabla Detalle de Dispensaciones
 CREATE TABLE IF NOT EXISTS `dispensacion_detalles` (
   `id` INT AUTO_INCREMENT PRIMARY KEY,
   `dispensacion_id` INT NOT NULL,
@@ -56,11 +62,14 @@ CREATE TABLE IF NOT EXISTS `dispensacion_detalles` (
   `precio_unitario` DECIMAL(10,2) NOT NULL,
   `subtotal` DECIMAL(10,2) NOT NULL,
   FOREIGN KEY (`dispensacion_id`) REFERENCES `dispensaciones`(`id`) ON DELETE CASCADE,
-  FOREIGN KEY (`medicamento_id`) REFERENCES `medicamentos`(`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  FOREIGN KEY (`medicamento_id`) REFERENCES `medicamentos`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Datos iniciales
--- Contraseña para ambos usuarios: 123456
+-- ========================================================
+-- DATOS INICIALES (SEEDERS)
+-- Contraseña por defecto para ambos usuarios: 123456
+-- ========================================================
+
 INSERT INTO `usuarios` (`username`, `password`, `nombre`, `rol`) VALUES
 ('admin', '$2y$10$e0MYzXyjpJS7Pd0RVvHwHeF0E85K7Y1V6fPZ.5aA9K0g9dE9H5ZKi', 'Administrador General', 'admin'),
 ('farmaceutico', '$2y$10$e0MYzXyjpJS7Pd0RVvHwHeF0E85K7Y1V6fPZ.5aA9K0g9dE9H5ZKi', 'Carlos López', 'farmaceutico')
