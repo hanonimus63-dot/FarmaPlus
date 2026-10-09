@@ -188,6 +188,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit" class="btn-ingresar">Ingresar al Sistema</button>
         </form>
 
+        <div style="text-align: center; margin-top: 15px; font-size: 14px;">
+            ¿No tienes una cuenta? <a href="registro.php" style="color: #0056b3; font-weight: bold; text-decoration: none;">Regístrate aquí</a>
+        </div>
+
         <div class="credenciales-demo">
             <strong>Credenciales para Pruebas (2 Roles):</strong><br>
             • Admin: <code>admin</code> / <code>123456</code><br>
